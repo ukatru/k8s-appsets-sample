@@ -1,0 +1,26 @@
+teams:
+  - teamName: cicd
+    repoUrls:
+      - https://gitlab.com/cloud8870409/myguestbook.git
+      - https://gitlab.com/cloud8870409/myotherrepo.git
+    targetClusters:
+      - clusterName: k8smpi001
+        namespaces:
+          - guestbook
+          - poc
+      - clusterName: k8smpi002
+        namespaces:
+          - staging
+
+  - teamName: niagara
+    repoUrls:
+      - https://gitlab.com/cloud8870409/myguestbook.git
+      - https://gitlab.com/cloud8870409/myotherrepo.git
+    targetClusters:
+      - clusterName: k8smpi001
+        namespaces:
+          - niagara
+          - poc
+      - clusterName: k8smpi003
+        namespaces:
+          - production

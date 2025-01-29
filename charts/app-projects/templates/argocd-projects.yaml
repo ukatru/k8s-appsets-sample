@@ -1,0 +1,34 @@
+{{- range .Values.teams }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: "{{ .teamName }}"
+  namespace: argocd
+spec:
+  description: "ArgoCD Project for team {{ .teamName }}"
+
+  # Loop through all repositories dynamically
+  sourceRepos:
+    {{- range .repoUrls }}
+    - "{{ . }}"
+    {{- end }}
+
+  # Allow applications to deploy to specific namespaces per cluster dynamically
+  destinations:
+    {{- range .targetClusters }}
+      {{- $cluster := .clusterName }}
+      {{- range .namespaces }}
+    - namespace: "{{ . }}"
+      server: "{{ $cluster }}"
+      {{- end }}
+    {{- end }}
+
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+{{- end }}
